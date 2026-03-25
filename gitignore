@@ -1,0 +1,32 @@
+# Build output
+x64/
+Debug/
+Release/
+*.obj
+*.pdb
+*.iobj
+*.ipdb
+*.log
+*.tlog
+*.lastbuildstate
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.sdf
+*.opensdf
+*.db
+*.opendb
+*.VC.db
+*.VC.opendb
+ConsoleApplication1/x64/
+
+# Uploads and runtime data
+uploads/
+logs/
+bbs.db
+
+# OS files
+Thumbs.db
+.DS_Store
