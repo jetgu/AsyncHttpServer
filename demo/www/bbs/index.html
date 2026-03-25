@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_name }} - Forum</title>
+    <link href="/bbs/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/bbs/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/bbs">
+                <i class="bi bi-chat-square-text"></i> {{ site_name }}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs">Home</a>
+                    </li>
+                    {% if user then %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs/new-post">
+                            <i class="bi bi-plus-circle"></i> New Post
+                        </a>
+                    </li>
+                    {% end %}
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user then %}
+                    {% if user.is_admin then %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs/admin">
+                            <i class="bi bi-gear"></i> Admin
+                        </a>
+                    </li>
+                    {% end %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/bbs/profile">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/bbs/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs/register">Register</a>
+                    </li>
+                    {% end %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="bi bi-folder"></i> Categories
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item {% if not current_category then %}active{% end %}">
+                            <a href="/bbs" class="text-decoration-none">All Posts</a>
+                        </li>
+                        {% for i, cat in ipairs(categories or {}) do %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center {% if current_category == cat.id then %}active{% end %}">
+                            <a href="/bbs?category={{ cat.id }}" class="text-decoration-none">{{ cat.name }}</a>
+                            {% if cat.guest_visible == 0 then %}
+                            <span class="badge bg-secondary" title="Members only"><i class="bi bi-lock-fill"></i></span>
+                            {% end %}
+                        </li>
+                        {% end %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="bi bi-list"></i> Recent Posts</span>
+                        {% if user then %}
+                        <a href="/bbs/new-post" class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus"></i> New Post
+                        </a>
+                        {% end %}
+                    </div>
+                    <div class="list-group list-group-flush">
+                        {% if posts and #posts > 0 then %}
+                        {% for i, post in ipairs(posts) do %}
+                        <a href="/bbs/post?id={{ post.id }}" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">
+                                    {% if post.is_pinned == 1 then %}
+                                    <span class="badge bg-warning text-dark me-1">
+                                        <i class="bi bi-pin-angle"></i> Pinned
+                                    </span>
+                                    {% end %}
+                                    {% if post.is_locked == 1 then %}
+                                    <span class="badge bg-secondary me-1">
+                                        <i class="bi bi-lock"></i>
+                                    </span>
+                                    {% end %}
+                                    {{ post.title }}
+                                </h6>
+                                <small class="text-muted">
+                                    <i class="bi bi-chat-dots"></i> {{ post.reply_count or 0 }}
+                                    {% local rpp = BBS_CONFIG.replies_per_page or 10 %}
+                                    {% local rpages = math.ceil((post.reply_count or 0) / rpp) %}
+                                    {% if rpages > 1 then %}
+                                    <span class="ms-1">
+                                        {% for rp = 1, math.min(rpages, 3) do %}
+                                        <a href="/bbs/post?id={{ post.id }}&rpage={{ rp }}" class="badge bg-light text-primary text-decoration-none" onclick="event.stopPropagation()">{{ rp }}</a>
+                                        {% end %}
+                                        {% if rpages > 3 then %}
+                                        <a href="/bbs/post?id={{ post.id }}&rpage=last" class="badge bg-light text-primary text-decoration-none" onclick="event.stopPropagation()">{{ rpages }} &raquo;</a>
+                                        {% end %}
+                                    </span>
+                                    {% end %}
+                                </small>
+                            </div>
+                            <p class="mb-1 text-muted small">
+                                <i class="bi bi-person"></i> {{ post.username }}
+                                {% if post.category_name then %}
+                                <span class="ms-2"><i class="bi bi-folder"></i> {{ post.category_name }}</span>
+                                {% end %}
+                                <span class="ms-2"><i class="bi bi-eye"></i> {{ post.view_count or 0 }}</span>
+                            </p>
+                        </a>
+                        {% end %}
+                        {% else %}
+                        <div class="list-group-item text-center text-muted py-5">
+                            <i class="bi bi-inbox fs-1"></i>
+                            <p class="mt-2">No posts yet. Be the first to create one!</p>
+                        </div>
+                        {% end %}
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                {% if total_pages and total_pages > 1 then %}
+                {% local pg_range = build_page_range(page, total_pages, 2) %}
+                <nav class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item {% if page <= 1 then %}disabled{% end %}">
+                            <a class="page-link" href="/bbs?page={{ page - 1 }}{% if current_category then %}&category={{ current_category }}{% end %}">
+                                <i class="bi bi-chevron-left"></i> Prev
+                            </a>
+                        </li>
+                        {% for i, item in ipairs(pg_range) do %}
+                            {% if item.ellipsis then %}
+                        <li class="page-item disabled">
+                            <span class="page-link">&hellip;</span>
+                        </li>
+                            {% else %}
+                        <li class="page-item {% if item.page == page then %}active{% end %}">
+                            <a class="page-link" href="/bbs?page={{ item.page }}{% if current_category then %}&category={{ current_category }}{% end %}">{{ item.page }}</a>
+                        </li>
+                            {% end %}
+                        {% end %}
+                        <li class="page-item {% if page >= total_pages then %}disabled{% end %}">
+                            <a class="page-link" href="/bbs?page={{ page + 1 }}{% if current_category then %}&category={{ current_category }}{% end %}">
+                                Next <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="text-center text-muted small">
+                        Page {{ page }} of {{ total_pages }}
+                    </div>
+                </nav>
+                {% end %}
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center text-muted">
+            <p>&copy; 2024 {{ site_name }}. Powered by Lua + AsyncHttpServer</p>
+        </div>
+    </footer>
+
+    <script src="/bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/bbs/static/js/main.js"></script>
+</body>
+</html>

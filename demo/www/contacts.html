@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact List - Lua HTTP Server</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .contact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .contact-table th,
+        .contact-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .contact-table th {
+            background: #667eea;
+            color: white;
+        }
+        .contact-table tr:hover {
+            background: #f5f5f5;
+        }
+        .contact-message {
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+        .btn-view {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            transition: background 0.3s;
+        }
+        .btn-view:hover {
+            background: #5a6fd6;
+        }
+        .contact-name-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .contact-name-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Contact Submissions</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/contacts">View Contacts</a>
+        </nav>
+    </header>
+    
+    <main>
+        <section>
+            <h2>All Contacts <span class="badge">{{ contact_count }}</span></h2>
+            
+            {% if contacts and #contacts > 0 then %}
+            <table class="contact-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>IP Address</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i, contact in ipairs(contacts) do %}
+                    <tr>
+                        <td>{{ contact.id }}</td>
+                        <td><a href="/contact/detail?id={{ contact.id }}" class="contact-name-link">{{ contact.name }}</a></td>
+                        <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
+                        <td class="contact-message" title="{{ contact.message }}">{{ contact.message }}</td>
+                        <td>{{ contact.ip_address }}</td>
+                        <td>{{ contact.created_at }}</td>
+                        <td><a href="/contact/detail?id={{ contact.id }}" class="btn-view">View</a></td>
+                    </tr>
+                    {% end %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-state">
+                <p>No contacts yet.</p>
+                <p><a href="/contact">Be the first to submit a message!</a></p>
+            </div>
+            {% end %}
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Lua HTTP Server Demo</p>
+    </footer>
+</body>
+</html>

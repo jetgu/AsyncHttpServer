@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }} - {{ site_name }}</title>
+    <link href="/bbs/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/bbs/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/bbs">
+                <i class="bi bi-chat-square-text"></i> {{ site_name }}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs">Home</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user then %}
+                    {% if user.is_admin then %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs/admin"><i class="bi bi-gear"></i> Admin</a>
+                    </li>
+                    {% end %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/bbs/profile">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/bbs/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="/bbs/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/bbs/register">Register</a></li>
+                    {% end %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/bbs">Home</a></li>
+                {% if post.category_name then %}
+                <li class="breadcrumb-item"><a href="/bbs?category={{ post.category_id }}">{{ post.category_name }}</a></li>
+                {% end %}
+                <li class="breadcrumb-item active">{{ post.title }}</li>
+            </ol>
+        </nav>
+
+        <!-- Post -->
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    {% if post.is_pinned == 1 then %}
+                    <span class="badge bg-warning text-dark me-2"><i class="bi bi-pin-angle"></i> Pinned</span>
+                    {% end %}
+                    {% if post.is_locked == 1 then %}
+                    <span class="badge bg-secondary me-2"><i class="bi bi-lock"></i> Locked</span>
+                    {% end %}
+                    {{ post.title }}
+                </h5>
+                {% if user and (user.user_id == post.user_id or user.is_admin) then %}
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-three-dots"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="/bbs/edit-post?id={{ post.id }}"><i class="bi bi-pencil"></i> Edit</a></li>
+                        <li><a class="dropdown-item text-danger" href="/bbs/delete-post?id={{ post.id }}" onclick="return confirm('Delete this post?')"><i class="bi bi-trash"></i> Delete</a></li>
+                    </ul>
+                </div>
+                {% end %}
+            </div>
+            <div class="card-body">
+                <div class="d-flex mb-3">
+                    <div class="flex-shrink-0">
+                        <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            {% __write(string.upper(string.sub(post.username or "?", 1, 1))) %}
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="mb-0">{{ post.username }}</h6>
+                        <small class="text-muted">
+                            <i class="bi bi-clock"></i> Posted on {{ post.created_at_fmt }}
+                            <span class="ms-2"><i class="bi bi-eye"></i> {{ post.view_count }} views</span>
+                        </small>
+                    </div>
+                    {% if user then %}
+                    <div class="ms-auto">
+                        <button type="button" class="btn btn-sm btn-outline-secondary quote-btn" 
+                                data-author="{{ post.username }}" 
+                                data-content="{{ post.content }}"
+                                title="Quote this post">
+                            <i class="bi bi-quote"></i> Quote
+                        </button>
+                    </div>
+                    {% end %}
+                </div>
+                <div class="post-content" id="post-content-{{ post.id }}">
+                    {! format_content(post.content) !}
+                </div>
+                
+                <!-- Attachments -->
+                {% if attachments and #attachments > 0 then %}
+                <hr>
+                <h6><i class="bi bi-paperclip"></i> Attachments</h6>
+                <div class="row">
+                    {% for i, att in ipairs(attachments) do %}
+                    <div class="col-md-4 mb-3">
+                        {% local ext = (att.original_name or ""):lower():match("%.([^%.]+)$") or "" %}
+                        {% local is_image = (ext == "jpg" or ext == "jpeg" or ext == "png" or ext == "gif") %}
+                        <div class="card h-100">
+                            {% if is_image then %}
+                            <a href="/bbs/uploads/{{ att.filename }}" target="_blank">
+                                <img src="/bbs/uploads/{{ att.filename }}" class="card-img-top" style="max-height: 150px; object-fit: cover;" alt="{{ att.original_name }}">
+                            </a>
+                            {% end %}
+                            <div class="card-body p-2">
+                                <a href="/bbs/uploads/{{ att.filename }}" target="_blank" class="text-decoration-none">
+                                    {% if is_image then %}
+                                    <i class="bi bi-image text-success"></i>
+                                    {% else %}
+                                    <i class="bi bi-file-earmark"></i>
+                                    {% end %}
+                                    <small>{{ att.original_name }}</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% end %}
+                </div>
+                {% end %}
+            </div>
+        </div>
+
+        <!-- Replies -->
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-chat-dots"></i> Replies ({{ reply_total }})</span>
+                {% if reply_total_pages and reply_total_pages > 1 then %}
+                <small class="text-muted">Page {{ reply_page }} of {{ reply_total_pages }}</small>
+                {% end %}
+            </div>
+
+            <!-- Reply pagination (top) -->
+            {% if reply_total_pages and reply_total_pages > 1 then %}
+            {% local rp_range = build_page_range(reply_page, reply_total_pages, 2) %}
+            <div class="card-body pb-0">
+                <nav>
+                    <ul class="pagination pagination-sm justify-content-center mb-2">
+                        <li class="page-item {% if reply_page <= 1 then %}disabled{% end %}">
+                            <a class="page-link" href="/bbs/post?id={{ post.id }}&rpage={{ reply_page - 1 }}">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        </li>
+                        {% for i, item in ipairs(rp_range) do %}
+                            {% if item.ellipsis then %}
+                        <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
+                            {% else %}
+                        <li class="page-item {% if item.page == reply_page then %}active{% end %}">
+                            <a class="page-link" href="/bbs/post?id={{ post.id }}&rpage={{ item.page }}">{{ item.page }}</a>
+                        </li>
+                            {% end %}
+                        {% end %}
+                        <li class="page-item {% if reply_page >= reply_total_pages then %}disabled{% end %}">
+                            <a class="page-link" href="/bbs/post?id={{ post.id }}&rpage={{ reply_page + 1 }}">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            {% end %}
+
+            <div class="card-body">
+                {% if replies and #replies > 0 then %}
+                {% for i, reply in ipairs(replies) do %}
+                <div class="d-flex mb-4" id="reply-{{ reply.id }}">
+                    <div class="flex-shrink-0">
+                        <div class="avatar bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                            {% __write(string.upper(string.sub(reply.username or "?", 1, 1))) %}
+                        </div>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-0">{{ reply.username }}</h6>
+                                <small class="text-muted"><i class="bi bi-clock"></i> {{ reply.created_at_fmt }}</small>
+                            </div>
+                            <div>
+                                {% if user then %}
+                                <button type="button" class="btn btn-sm btn-outline-secondary quote-btn me-1" 
+                                        data-author="{{ reply.username }}" 
+                                        data-content="{{ reply.content }}"
+                                        title="Quote this reply">
+                                    <i class="bi bi-quote"></i>
+                                </button>
+                                {% end %}
+                                {% if user and user.is_admin then %}
+                                <a href="/bbs/delete-reply?id={{ reply.id }}&post_id={{ post.id }}" class="text-danger btn btn-sm" onclick="return confirm('Delete this reply?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                                {% end %}
+                            </div>
+                        </div>
+                        <div class="reply-content mt-2" id="reply-content-{{ reply.id }}">{! format_content(reply.content) !}</div>
+                        
+                        {% if reply.attachments and #reply.attachments > 0 then %}
+                        <div class="mt-2">
+                            {% for j, att in ipairs(reply.attachments) do %}
+                            {% local ext = (att.original_name or ""):lower():match("%.([^%.]+)$") or "" %}
+                            {% local is_image = (ext == "jpg" or ext == "jpeg" or ext == "png" or ext == "gif") %}
+                            <div class="d-inline-block me-2 mb-2">
+                                {% if is_image then %}
+                                <a href="/bbs/uploads/{{ att.filename }}" target="_blank">
+                                    <img src="/bbs/uploads/{{ att.filename }}" class="img-thumbnail" style="max-width: 100px; max-height: 100px; object-fit: cover;" alt="{{ att.original_name }}">
+                                </a>
+                                {% else %}
+                                <a href="/bbs/uploads/{{ att.filename }}" target="_blank" class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-file-earmark"></i> {{ att.original_name }}
+                                </a>
+                                {% end %}
+                            </div>
+                            {% end %}
+                        </div>
+                        {% end %}
+                    </div>
+                </div>
+                {% if i < #replies then %}<hr>{% end %}
+                {% end %}
+                {% else %}
+                <p class="text-muted text-center py-3">No replies yet. Be the first to reply!</p>
+                {% end %}
+            </div>
+
+            <!-- Reply pagination (bottom) -->
+            {% if reply_total_pages and reply_total_pages > 1 then %}
+            {% local rp_range2 = build_page_range(reply_page, reply_total_pages, 2) %}
+            <div class="card-footer">
+                <nav>
+                    <ul class="pagination pagination-sm justify-content-center mb-0">
+                        <li class="page-item {% if reply_page <= 1 then %}disabled{% end %}">
+                            <a class="page-link" href="/bbs/post?id={{ post.id }}&rpage={{ reply_page - 1 }}">
+                                <i class="bi bi-chevron-left"></i> Prev
+                            </a>
+                        </li>
+                        {% for i, item in ipairs(rp_range2) do %}
+                            {% if item.ellipsis then %}
+                        <li class="page-item disabled"><span class="page-link">&hellip;</span></li>
+                            {% else %}
+                        <li class="page-item {% if item.page == reply_page then %}active{% end %}">
+                            <a class="page-link" href="/bbs/post?id={{ post.id }}&rpage={{ item.page }}">{{ item.page }}</a>
+                        </li>
+                            {% end %}
+                        {% end %}
+                        <li class="page-item {% if reply_page >= reply_total_pages then %}disabled{% end %}">
+                            <a class="page-link" href="/bbs/post?id={{ post.id }}&rpage={{ reply_page + 1 }}">
+                                Next <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            {% end %}
+        </div>
+
+        <!-- Reply Form -->
+        {% if user then %}
+        {% if post.is_locked ~= 1 or user.is_admin then %}
+        <div class="card" id="reply-form-card">
+            <div class="card-header">
+                <i class="bi bi-reply"></i> Post a Reply
+            </div>
+            <div class="card-body">
+                <form action="/bbs/reply" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <div class="mb-3">
+                        <div class="position-relative">
+                            <textarea class="form-control" name="content" id="reply-content" rows="6" placeholder="Write your reply..." required></textarea>
+                            <!-- Emoji Picker Toggle -->
+                            <button type="button" class="btn btn-sm btn-outline-secondary emoji-picker-btn" id="emoji-toggle" title="Insert Emoji">
+                                <i class="bi bi-emoji-smile"></i>
+                            </button>
+                            <!-- Emoji Picker Panel -->
+                            <div class="emoji-picker" id="emoji-picker" style="display: none;">
+                                <div class="emoji-picker-header">
+                                    <span>Emojis</span>
+                                    <button type="button" class="btn-close btn-sm" id="emoji-close"></button>
+                                </div>
+                                <div class="emoji-categories">
+                                    <button type="button" class="emoji-cat-btn active" data-category="smileys">😀</button>
+                                    <button type="button" class="emoji-cat-btn" data-category="gestures">👍</button>
+                                    <button type="button" class="emoji-cat-btn" data-category="hearts">❤️</button>
+                                    <button type="button" class="emoji-cat-btn" data-category="animals">🐱</button>
+                                    <button type="button" class="emoji-cat-btn" data-category="food">🍕</button>
+                                    <button type="button" class="emoji-cat-btn" data-category="objects">⚽</button>
+                                    <button type="button" class="emoji-cat-btn" data-category="symbols">✅</button>
+                                </div>
+                                <div class="emoji-grid" id="emoji-grid">
+                                    <!-- Emojis will be inserted here by JS -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-text">
+                            <i class="bi bi-info-circle"></i> Use <code>[quote=username]...[/quote]</code> to quote someone
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Attachment (optional)</label>
+                        <input type="file" class="form-control" name="attachment" accept=".jpg,.jpeg,.png,.gif,.pdf,.zip,.txt">
+                        <div class="form-text">Allowed: jpg, jpeg, png, gif, pdf, zip, txt (max 10MB)</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-send"></i> Submit Reply
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            <i class="bi bi-lock"></i> This post is locked. No new replies allowed.
+        </div>
+        {% end %}
+        {% else %}
+        <div class="alert alert-info">
+            <a href="/bbs/login">Login</a> or <a href="/bbs/register">Register</a> to reply to this post.
+        </div>
+        {% end %}
+    </div>
+
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center text-muted">
+            <p>&copy; 2024 {{ site_name }}</p>
+        </div>
+    </footer>
+
+    <script src="/bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Emoji data by category
+    var emojiData = {
+        smileys: ['😀', '😃', '😄', '😁', '😆', '😅', '🤣', '😂', '🙂', '😊', '😇', '🥰', '😍', '🤩', '😘', '😗', '😚', '😋', '😛', '😜', '🤪', '😝', '🤑', '🤗', '🤭', '🤫', '🤔', '🤐', '🤨', '😐', '😑', '😶', '😏', '😒', '🙄', '😬', '😮', '🤯', '😴', '🥱', '😷', '🤒', '🤕', '🤢', '🤮', '🥵', '🥶', '😵', '🤠', '🥳', '🥸', '😎', '🤓', '🧐'],
+        gestures: ['👍', '👎', '👊', '✊', '🤛', '🤜', '👏', '🙌', '👐', '🤲', '🤝', '🙏', '✌️', '🤞', '🤟', '🤘', '🤙', '👈', '👉', '👆', '👇', '☝️', '✋', '🤚', '🖐️', '🖖', '👋', '🤏', '✍️', '🤳', '💪', '🦾', '🦿', '🦵', '🦶', '👂', '🦻', '👃', '👀', '👁️', '👅', '👄', '💋'],
+        hearts: ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💔', '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '♥️', '😻', '💌', '💐', '🌹', '🥀', '🌷', '🌸', '💮', '🏵️', '🌻', '🌼'],
+        animals: ['🐱', '🐶', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦', '🐤', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋', '🐌', '🐞', '🐜', '🦟', '🐢', '🐍', '🦎', '🦖', '🦕', '🐙', '🦑', '🦐', '🦞', '🦀', '🐡', '🐠', '🐟', '🐬', '🐳', '🐋', '🦈', '🐊'],
+        food: ['🍕', '🍔', '🍟', '🌭', '🍿', '🧂', '🥓', '🥚', '🍳', '🧇', '🥞', '🧈', '🍞', '🥐', '🥨', '🧀', '🥗', '🥙', '🥪', '🌮', '🌯', '🫔', '🥫', '🍝', '🍜', '🍲', '🍛', '🍣', '🍱', '🥟', '🍤', '🍙', '🍚', '🍘', '🍥', '🥠', '🍢', '🍡', '🍧', '🍨', '🍦', '🥧', '🧁', '🍰', '🎂', '🍮', '🍭', '🍬', '🍫', '🍩', '🍪', '☕', '🍵', '🧃', '🥤', '🍶', '🍺', '🍻', '🥂', '🍷'],
+        objects: ['⚽', '🏀', '🏈', '⚾', '🥎', '🎾', '🏐', '🏉', '🥏', '🎱', '🪀', '🏓', '🏸', '🏒', '🏑', '🥍', '🏏', '🪃', '🥅', '⛳', '🪁', '🏹', '🎣', '🤿', '🥊', '🥋', '🎽', '🛹', '🛼', '🛷', '⛸️', '🥌', '🎿', '⛷️', '🏂', '🎮', '🕹️', '🎲', '🧩', '🎭', '🎨', '🎬', '🎤', '🎧', '🎼', '🎹', '🥁', '🎷', '🎺', '🎸', '🪕', '🎻'],
+        symbols: ['✅', '❌', '❓', '❗', '💯', '🔥', '⭐', '🌟', '✨', '💫', '💥', '💢', '💦', '💨', '🕳️', '💣', '💬', '👁️‍🗨️', '🗨️', '🗯️', '💭', '💤', '🔔', '🔕', '🎵', '🎶', '💰', '💴', '💵', '💶', '💷', '💸', '💳', '🔑', '🗝️', '🔨', '🪓', '⛏️', '⚒️', '🛠️', '🔧', '🔩', '⚙️', '🧲', '💊', '💉', '🩸', '🧬', '🦠', '🧫', '🧪', '🌡️', '🔬', '🔭', '📡']
+    };
+    
+    // Quote functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle quote buttons
+        document.querySelectorAll('.quote-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var author = this.getAttribute('data-author');
+                var content = this.getAttribute('data-content');
+                
+                // Get the textarea
+                var textarea = document.getElementById('reply-content');
+                if (!textarea) return;
+                
+                // Clean up the content - remove HTML tags for plain text quote
+                var tempDiv = document.createElement('div');
+                tempDiv.innerHTML = content;
+                var plainText = tempDiv.textContent || tempDiv.innerText || '';
+                
+                // Trim and limit quote length
+                plainText = plainText.trim();
+                if (plainText.length > 500) {
+                    plainText = plainText.substring(0, 500) + '...';
+                }
+                
+                // Create quote BBCode style
+                var quoteText = '[quote=' + author + ']\n' + plainText + '\n[/quote]\n\n';
+                
+                // Insert at cursor or append
+                var cursorPos = textarea.selectionStart;
+                var textBefore = textarea.value.substring(0, cursorPos);
+                var textAfter = textarea.value.substring(textarea.selectionEnd);
+                
+                textarea.value = textBefore + quoteText + textAfter;
+                
+                // Focus and scroll to textarea
+                textarea.focus();
+                textarea.selectionStart = textarea.selectionEnd = cursorPos + quoteText.length;
+                
+                // Scroll to reply form
+                document.getElementById('reply-form-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+        
+        // Emoji Picker functionality
+        var emojiToggle = document.getElementById('emoji-toggle');
+        var emojiPicker = document.getElementById('emoji-picker');
+        var emojiGrid = document.getElementById('emoji-grid');
+        var emojiClose = document.getElementById('emoji-close');
+        var textarea = document.getElementById('reply-content');
+        
+        if (emojiToggle && emojiPicker && emojiGrid && textarea) {
+            // Load initial emojis (smileys)
+            loadEmojis('smileys');
+            
+            // Toggle emoji picker
+            emojiToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
+            });
+            
+            // Close emoji picker
+            if (emojiClose) {
+                emojiClose.addEventListener('click', function() {
+                    emojiPicker.style.display = 'none';
+                });
+            }
+            
+            // Category buttons
+            document.querySelectorAll('.emoji-cat-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.emoji-cat-btn').forEach(function(b) {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    loadEmojis(this.getAttribute('data-category'));
+                });
+            });
+            
+            // Close picker when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!emojiPicker.contains(e.target) && e.target !== emojiToggle) {
+                    emojiPicker.style.display = 'none';
+                }
+            });
+        }
+        
+        function loadEmojis(category) {
+            if (!emojiGrid || !emojiData[category]) return;
+            
+            emojiGrid.innerHTML = '';
+            emojiData[category].forEach(function(emoji) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'emoji-btn';
+                btn.textContent = emoji;
+                btn.addEventListener('click', function() {
+                    insertEmoji(emoji);
+                });
+                emojiGrid.appendChild(btn);
+            });
+        }
+        
+        function insertEmoji(emoji) {
+            if (!textarea) return;
+            
+            var cursorPos = textarea.selectionStart;
+            var textBefore = textarea.value.substring(0, cursorPos);
+            var textAfter = textarea.value.substring(textarea.selectionEnd);
+            
+            textarea.value = textBefore + emoji + textAfter;
+            textarea.focus();
+            textarea.selectionStart = textarea.selectionEnd = cursorPos + emoji.length;
+        }
+    });
+    </script>
+</body>
+</html>

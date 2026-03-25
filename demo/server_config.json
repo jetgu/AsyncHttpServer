@@ -1,0 +1,30 @@
+{
+{
+    "server": {
+        "port": 8082,
+        "worker_threads": 4,
+        "max_body_size": 10485760,
+        "request_timeout": 30
+    },
+    "ssl": {
+        "enabled": false,
+        "cert_file": "ServerCert.pem",
+        "key_file": "ServerKey.pem",
+        "password": ""
+    },
+    "logging": {
+        "enabled": true,
+        "path": "./logs",
+        "file": "server.log",
+        "max_size": 10485760,
+        "max_files": 5
+    },
+    "lua": {
+        "script_path": "./bbs/bbs.lua",
+        "web_root": "./www"
+    },
+    "static_files": {
+        "enabled": true,
+        "path": "/static"
+    }
+}

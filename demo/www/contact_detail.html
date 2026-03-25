@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact: {{ contact.name }}</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Contact Details</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/contacts">Back to List</a>
+        </nav>
+    </header>
+    
+    <main>
+        <section>
+            {% if contact then %}
+            <h2>{{ contact.name }}</h2>
+            <dl>
+                <dt>Email:</dt>
+                <dd><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></dd>
+                
+                <dt>Message:</dt>
+                <dd>{{ contact.message }}</dd>
+                
+                <dt>IP Address:</dt>
+                <dd>{{ contact.ip_address }}</dd>
+                
+                <dt>Submitted:</dt>
+                <dd>{{ contact.created_at }}</dd>
+            </dl>
+            {% else %}
+            <p>Contact not found.</p>
+            {% end %}
+        </section>
+    </main>
+</body>
+</html>

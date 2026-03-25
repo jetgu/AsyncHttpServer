@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Lua HTTP Server</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>About Us</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/contacts">View Contacts</a>
+            <a href="/api/info">API Info</a>
+        </nav>
+    </header>
+    
+    <main>
+        <section>
+            <h2>About This Project</h2>
+            <p>This is a demonstration of serving HTML files via Lua scripts in a C++ async HTTP server.</p>
+            
+            <h3>Technology Stack</h3>
+            <ul>
+                <li><strong>C++14</strong> - Core server implementation</li>
+                <li><strong>Boost.Asio</strong> - Async I/O operations</li>
+                <li><strong>OpenSSL</strong> - TLS/HTTPS support</li>
+                <li><strong>Lua 5.4</strong> - Scripting engine</li>
+            </ul>
+            
+            <h3>How It Works</h3>
+            <p>The Lua script reads HTML files from disk and serves them with the correct MIME type.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Lua HTTP Server Demo</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - {{ site_name }}</title>
+    <link href="/bbs/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/bbs"><i class="bi bi-chat-square-text"></i> {{ site_name }}</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/bbs/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="avatar bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px; font-size: 2.5rem;">
+                            {% __write(string.upper(string.sub(profile.username or "?", 1, 1))) %}
+                        </div>
+                        <h4>{{ profile.username }}</h4>
+                        <p class="text-muted">{{ profile.email }}</p>
+                        {% if profile.is_admin == 1 then %}
+                        <span class="badge bg-danger">Administrator</span>
+                        {% end %}
+                        <hr>
+                        <p class="small text-muted mb-1">Member since</p>
+                        <p>{{ profile.created_at_fmt }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="bi bi-gear"></i> Edit Profile
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/bbs/profile">
+                            <div class="mb-3">
+                                <label class="form-label">Bio</label>
+                                <textarea class="form-control" name="bio" rows="3">{{ profile.bio or '' }}</textarea>
+                            </div>
+                            <hr>
+                            <h6>Change Password</h6>
+                            <div class="mb-3">
+                                <label class="form-label">New Password</label>
+                                <input type="password" class="form-control" name="new_password" minlength="6">
+                                <div class="form-text">Leave blank to keep current password</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm New Password</label>
+                                <input type="password" class="form-control" name="confirm_password" minlength="6">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check"></i> Save Changes
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AsyncHttpServer - Lua Powered Web Server</title>
+    <link href="/bbs/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #0d6efd 0%, #6610f2 50%, #6f42c1 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        .feature-card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .tech-badge {
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+        .architecture-box {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            border-radius: 12px;
+            padding: 24px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .architecture-box .comment { color: #6c7086; }
+        .architecture-box .keyword { color: #89b4fa; }
+        .architecture-box .string { color: #a6e3a1; }
+        .architecture-box .func { color: #f9e2af; }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="container text-center">
+            <div class="mb-4">
+                <i class="bi bi-hdd-rack" style="font-size: 4rem;"></i>
+            </div>
+            <h1>AsyncHttpServer</h1>
+            <p class="lead mb-4" style="max-width: 700px; margin: 0 auto;">
+                A high-performance, asynchronous HTTP/HTTPS server built in C++ with
+                <strong>Lua scripting</strong> for dynamic content � fast, lightweight, and extensible.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="/bbs" class="btn btn-light btn-lg px-4">
+                    <i class="bi bi-chat-square-text"></i> Visit the Forum
+                </a>
+                <a href="#features" class="btn btn-outline-light btn-lg px-4">
+                    <i class="bi bi-arrow-down-circle"></i> Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="bg-light py-4">
+        <div class="container">
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <span class="tech-badge bg-primary text-white"><i class="bi bi-cpu"></i> C++14</span>
+                <span class="tech-badge bg-info text-white"><i class="bi bi-lightning"></i> Boost.Asio</span>
+                <span class="tech-badge bg-success text-white"><i class="bi bi-filetype-lua"></i> Lua 5.4</span>
+                <span class="tech-badge bg-warning text-dark"><i class="bi bi-database"></i> SQLite</span>
+                <span class="tech-badge bg-danger text-white"><i class="bi bi-lock"></i> OpenSSL</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="container py-5" id="features">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Features</h2>
+            <p class="text-muted">Everything you need to build and serve dynamic web applications</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card feature-card h-100 shadow-sm p-4">
+                    <div class="feature-icon bg-primary text-white">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+                    <h5>Async I/O</h5>
+                    <p class="text-muted mb-0">
+                        Built on Boost.Asio with a thread pool for fully non-blocking request handling.
+                        Handles thousands of concurrent connections efficiently.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 shadow-sm p-4">
+                    <div class="feature-icon bg-success text-white">
+                        <i class="bi bi-code-slash"></i>
+                    </div>
+                    <h5>Lua Scripting</h5>
+                    <p class="text-muted mb-0">
+                        Write your request handlers in Lua with full access to request/response objects,
+                        SQLite databases, file I/O, and HTML template rendering.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 shadow-sm p-4">
+                    <div class="feature-icon bg-danger text-white">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <h5>HTTPS / SSL</h5>
+                    <p class="text-muted mb-0">
+                        Native TLS support via OpenSSL. Simply provide your certificate and key
+                        files in the configuration to enable secure connections.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 shadow-sm p-4">
+                    <div class="feature-icon bg-warning text-dark">
+                        <i class="bi bi-database"></i>
+                    </div>
+                    <h5>SQLite Integration</h5>
+                    <p class="text-muted mb-0">
+                        Built-in SQLite bindings accessible from Lua. Create tables, run queries,
+                        and manage data without any external database server.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 shadow-sm p-4">
+                    <div class="feature-icon bg-info text-white">
+                        <i class="bi bi-layout-text-window-reverse"></i>
+                    </div>
+                    <h5>Template Engine</h5>
+                    <p class="text-muted mb-0">
+                        Embedded template engine with <code>{<span></span>{ var }}</code> for escaped output,
+                        <code>{<span></span>! raw !}</code> for HTML, and <code>{<span></span>% lua %}</code> for logic blocks.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 shadow-sm p-4">
+                    <div class="feature-icon bg-secondary text-white">
+                        <i class="bi bi-gear"></i>
+                    </div>
+                    <h5>JSON Configuration</h5>
+                    <p class="text-muted mb-0">
+                        Configure port, SSL, Lua scripts, web root, logging, and log rotation
+                        through a single <code>server_config.json</code> file.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 shadow-sm p-4">
+                    <div class="feature-icon bg-dark text-white">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+                    <h5>Logging &amp; Rotation</h5>
+                    <p class="text-muted mb-0">
+                        Colored console output and file logging with automatic size-based rotation.
+                        Tracks request method, path, status, response size, and duration.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 shadow-sm p-4">
+                    <div class="feature-icon bg-primary text-white">
+                        <i class="bi bi-upload"></i>
+                    </div>
+                    <h5>File Uploads</h5>
+                    <p class="text-muted mb-0">
+                        Multipart form parsing with binary-safe handling.
+                        Upload images, documents, ZIP files and more with original filename preservation.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 shadow-sm p-4">
+                    <div class="feature-icon bg-success text-white">
+                        <i class="bi bi-image"></i>
+                    </div>
+                    <h5>CAPTCHA Generation</h5>
+                    <p class="text-muted mb-0">
+                        Server-side BMP image CAPTCHA generation in C++ with noise, random lines,
+                        and per-character color variation � no external libraries needed.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Architecture -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Architecture</h2>
+                <p class="text-muted">How the pieces fit together</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="architecture-box">
+                        <span class="comment">-- server_config.json loads settings</span><br>
+                        <span class="comment">-- C++ AsyncHttpServer handles connections</span><br>
+                        <span class="comment">-- Lua scripts process requests</span><br><br>
+                        <span class="keyword">Client</span> &rarr; <span class="keyword">AsyncHttpServer</span> (C++ / Boost.Asio)<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&darr;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="func">LuaScriptHandler</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="string">Routes</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">Templates</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">SQLite DB</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">Response</span> &rarr; <span class="keyword">Client</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo: BBS -->
+    <div class="container py-5">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">Live Demo</h2>
+            <p class="text-muted">A full-featured forum built entirely with this server</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow border-0">
+                    <div class="card-body p-5 text-center">
+                        <i class="bi bi-chat-square-text text-primary" style="font-size: 3rem;"></i>
+                        <h3 class="mt-3">{{ site_name }}</h3>
+                        <p class="text-muted mb-4">
+                            A complete bulletin board system powered by Lua scripts running on AsyncHttpServer.
+                            Features user registration, posts, replies, file attachments, emoji picker,
+                            quote support, image CAPTCHA, and an admin panel.
+                        </p>
+                        <div class="row g-3 mb-4 text-start">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> User registration &amp; login</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Create posts &amp; replies</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> File attachments &amp; image preview</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Emoji picker</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Quote &amp; reply</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Image CAPTCHA protection</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Admin panel</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Category management</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="/bbs" class="btn btn-primary btn-lg px-5">
+                            <i class="bi bi-arrow-right-circle"></i> Enter the Forum
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p class="mb-1">
+                <i class="bi bi-hdd-rack"></i> <strong>AsyncHttpServer</strong> &mdash;
+                Built with C++14, Boost.Asio, Lua, SQLite &amp; OpenSSL
+            </p>
+            <p class="text-muted small mb-0">&copy; 2024 {{ site_name }}</p>
+        </div>
+    </footer>
+
+    <script src="/bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

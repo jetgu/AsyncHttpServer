@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - {{ site_name }}</title>
+    <link href="/bbs/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        .captcha-container {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        .captcha-image {
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .refresh-captcha {
+            cursor: pointer;
+            color: #0d6efd;
+        }
+        .refresh-captcha:hover {
+            color: #0a58ca;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-chat-square-text text-primary" style="font-size: 3rem;"></i>
+                            <h3 class="mt-2">{{ site_name }}</h3>
+                            <p class="text-muted">Create a new account</p>
+                        </div>
+
+                        {% if errors and #errors > 0 then %}
+                        <div class="alert alert-danger">
+                            <ul class="mb-0">
+                            {% for i, err in ipairs(errors) do %}
+                                <li>{{ err }}</li>
+                            {% end %}
+                            </ul>
+                        </div>
+                        {% end %}
+
+                        <form method="POST" action="/bbs/register">
+                            <input type="hidden" name="captcha_id" id="captcha_id" value="{{ captcha_id }}">
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                    <input type="text" class="form-control" name="username" value="{{ username or '' }}" minlength="3" required>
+                                </div>
+                                <div class="form-text">At least 3 characters</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" name="email" value="{{ email or '' }}" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input type="password" class="form-control" name="password" minlength="6" required>
+                                </div>
+                                <div class="form-text">At least 6 characters</div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                    <input type="password" class="form-control" name="confirm" minlength="6" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label"><i class="bi bi-shield-check"></i> Security Check</label>
+                                <div class="captcha-container mb-2">
+                                    <img src="/bbs/captcha?id={{ captcha_id }}" alt="CAPTCHA" class="captcha-image" id="captcha_image">
+                                    <br>
+                                    <small class="refresh-captcha" onclick="refreshCaptcha()">
+                                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                                    </small>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-calculator"></i></span>
+                                    <input type="text" class="form-control" name="captcha_answer" placeholder="Enter the answer" required autocomplete="off">
+                                </div>
+                                <div class="form-text">Solve the math problem shown in the image</div>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-person-plus"></i> Create Account
+                                </button>
+                            </div>
+                        </form>
+
+                        <hr class="my-4">
+
+                        <p class="text-center mb-0">
+                            Already have an account? <a href="/bbs/login">Login</a>
+                        </p>
+                        <p class="text-center mt-2">
+                            <a href="/bbs" class="text-muted"><i class="bi bi-arrow-left"></i> Back to Forum</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    function refreshCaptcha() {
+        // Redirect to register page to get a new captcha
+        window.location.href = '/bbs/register';
+    }
+    </script>
+</body>
+</html>

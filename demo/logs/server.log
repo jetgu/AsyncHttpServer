@@ -1,0 +1,184 @@
+[2026-03-25 11:14:02.057] [INFO ] === Server Initializing ===
+[2026-03-25 11:14:02.118] [INFO ] Server started on port 8082 with 4 worker threads
+[2026-03-25 11:14:16.207] [INFO ] 127.0.0.1 - GET /bbs
+[2026-03-25 11:14:16.213] [INFO ] 127.0.0.1 - Response: 200 (3.6 KB) [5ms]
+[2026-03-25 11:14:16.219] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:14:16.221] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:14:16.221] [INFO ] 127.0.0.1 - GET /bbs/static/css/style.css
+[2026-03-25 11:14:16.222] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:14:16.223] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [3ms]
+[2026-03-25 11:14:16.224] [INFO ] 127.0.0.1 - GET /bbs/static/js/main.js
+[2026-03-25 11:14:16.224] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [3ms]
+[2026-03-25 11:14:16.225] [INFO ] 127.0.0.1 - Response: 200 (5.4 KB) [4ms]
+[2026-03-25 11:14:16.226] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [6ms]
+[2026-03-25 11:14:16.227] [INFO ] 127.0.0.1 - Response: 200 (5.3 KB) [3ms]
+[2026-03-25 11:14:16.243] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:14:16.245] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [1ms]
+[2026-03-25 11:14:20.116] [INFO ] 127.0.0.1 - GET /bbs/login
+[2026-03-25 11:14:20.119] [INFO ] 127.0.0.1 - Response: 200 (4.7 KB) [2ms]
+[2026-03-25 11:14:20.124] [INFO ] 127.0.0.1 - GET /bbs/captcha?id=NWdQCH9RCW4EiYzH7E7mvIxdNf1ZiHv1
+[2026-03-25 11:14:20.125] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:14:20.126] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:14:20.126] [INFO ] 127.0.0.1 - Response: 200 (14.8 KB) [1ms]
+[2026-03-25 11:14:20.128] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [3ms]
+[2026-03-25 11:14:20.128] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [4ms]
+[2026-03-25 11:14:20.149] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:14:20.151] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [2ms]
+[2026-03-25 11:14:31.628] [INFO ] 127.0.0.1 - POST /bbs/login
+[2026-03-25 11:14:31.634] [INFO ] 127.0.0.1 - Response: 200 (4.9 KB) [5ms]
+[2026-03-25 11:14:31.645] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:14:31.645] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:14:31.646] [INFO ] 127.0.0.1 - GET /bbs/captcha?id=3mhnjihsV21FmN97Gr9orI3rhWB2UJ7W
+[2026-03-25 11:14:31.646] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [1ms]
+[2026-03-25 11:14:31.648] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [2ms]
+[2026-03-25 11:14:31.648] [INFO ] 127.0.0.1 - Response: 200 (16.1 KB) [2ms]
+[2026-03-25 11:14:31.678] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:14:31.682] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [3ms]
+[2026-03-25 11:14:42.934] [INFO ] 127.0.0.1 - POST /bbs/login
+[2026-03-25 11:14:42.953] [INFO ] 127.0.0.1 - Response: 302 (0 B) [19ms]
+[2026-03-25 11:14:42.956] [INFO ] 127.0.0.1 - GET /bbs
+[2026-03-25 11:14:42.966] [INFO ] 127.0.0.1 - Response: 200 (4.6 KB) [9ms]
+[2026-03-25 11:14:42.973] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:14:42.973] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:14:42.974] [INFO ] 127.0.0.1 - GET /bbs/static/css/style.css
+[2026-03-25 11:14:42.974] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:14:42.975] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [2ms]
+[2026-03-25 11:14:42.976] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [2ms]
+[2026-03-25 11:14:42.976] [INFO ] 127.0.0.1 - GET /bbs/static/js/main.js
+[2026-03-25 11:14:42.977] [INFO ] 127.0.0.1 - Response: 200 (5.4 KB) [3ms]
+[2026-03-25 11:14:42.977] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [3ms]
+[2026-03-25 11:14:42.978] [INFO ] 127.0.0.1 - Response: 200 (5.3 KB) [2ms]
+[2026-03-25 11:14:42.989] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:14:42.990] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [1ms]
+[2026-03-25 11:14:47.691] [INFO ] 127.0.0.1 - GET /bbs?category=1
+[2026-03-25 11:14:47.696] [INFO ] 127.0.0.1 - Response: 200 (4.6 KB) [5ms]
+[2026-03-25 11:14:47.703] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:14:47.703] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:14:47.704] [INFO ] 127.0.0.1 - GET /bbs/static/css/style.css
+[2026-03-25 11:14:47.704] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:14:47.705] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [2ms]
+[2026-03-25 11:14:47.706] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [3ms]
+[2026-03-25 11:14:47.706] [INFO ] 127.0.0.1 - GET /bbs/static/js/main.js
+[2026-03-25 11:14:47.707] [INFO ] 127.0.0.1 - Response: 200 (5.4 KB) [3ms]
+[2026-03-25 11:14:47.708] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [4ms]
+[2026-03-25 11:14:47.708] [INFO ] 127.0.0.1 - Response: 200 (5.3 KB) [2ms]
+[2026-03-25 11:14:47.727] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:14:47.729] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [1ms]
+[2026-03-25 11:14:49.463] [INFO ] 127.0.0.1 - GET /bbs
+[2026-03-25 11:14:49.472] [INFO ] 127.0.0.1 - Response: 200 (4.6 KB) [8ms]
+[2026-03-25 11:14:49.477] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:14:49.477] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:14:49.478] [INFO ] 127.0.0.1 - GET /bbs/static/css/style.css
+[2026-03-25 11:14:49.478] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:14:49.479] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [2ms]
+[2026-03-25 11:14:49.480] [INFO ] 127.0.0.1 - GET /bbs/static/js/main.js
+[2026-03-25 11:14:49.480] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [3ms]
+[2026-03-25 11:14:49.481] [INFO ] 127.0.0.1 - Response: 200 (5.4 KB) [3ms]
+[2026-03-25 11:14:49.482] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [4ms]
+[2026-03-25 11:14:49.482] [INFO ] 127.0.0.1 - Response: 200 (5.3 KB) [2ms]
+[2026-03-25 11:14:49.494] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:14:49.495] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [1ms]
+[2026-03-25 11:14:50.511] [INFO ] 127.0.0.1 - GET /bbs/new-post
+[2026-03-25 11:14:50.517] [INFO ] 127.0.0.1 - Response: 200 (11.1 KB) [5ms]
+[2026-03-25 11:14:50.523] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:14:50.523] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:14:50.524] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:14:50.524] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [1ms]
+[2026-03-25 11:14:50.525] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [2ms]
+[2026-03-25 11:14:50.526] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [3ms]
+[2026-03-25 11:14:50.539] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:14:50.542] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [2ms]
+[2026-03-25 11:14:57.538] [INFO ] 127.0.0.1 - GET /bbs/admin
+[2026-03-25 11:14:57.545] [INFO ] 127.0.0.1 - Response: 200 (6.6 KB) [7ms]
+[2026-03-25 11:14:57.552] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:14:57.552] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:14:57.554] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:14:57.554] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [1ms]
+[2026-03-25 11:14:57.555] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [2ms]
+[2026-03-25 11:14:57.555] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [3ms]
+[2026-03-25 11:14:57.566] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:14:57.569] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [3ms]
+[2026-03-25 11:14:59.129] [INFO ] 127.0.0.1 - GET /bbs/admin/categories
+[2026-03-25 11:14:59.135] [INFO ] 127.0.0.1 - Response: 200 (11.6 KB) [6ms]
+[2026-03-25 11:14:59.140] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:14:59.141] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:14:59.142] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:14:59.143] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [1ms]
+[2026-03-25 11:14:59.143] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [2ms]
+[2026-03-25 11:14:59.144] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [3ms]
+[2026-03-25 11:14:59.157] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:14:59.159] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [2ms]
+[2026-03-25 11:15:05.745] [INFO ] 127.0.0.1 - GET /bbs/admin
+[2026-03-25 11:15:05.753] [INFO ] 127.0.0.1 - Response: 200 (6.6 KB) [7ms]
+[2026-03-25 11:15:05.758] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:15:05.759] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:15:05.760] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:15:05.761] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [3ms]
+[2026-03-25 11:15:05.762] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [3ms]
+[2026-03-25 11:15:05.763] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [4ms]
+[2026-03-25 11:15:05.774] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:15:05.777] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [2ms]
+[2026-03-25 11:15:07.070] [INFO ] 127.0.0.1 - GET /bbs/admin/users
+[2026-03-25 11:15:07.077] [INFO ] 127.0.0.1 - Response: 200 (3.7 KB) [6ms]
+[2026-03-25 11:15:07.081] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:15:07.082] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:15:07.082] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:15:07.083] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [2ms]
+[2026-03-25 11:15:07.084] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [3ms]
+[2026-03-25 11:15:07.085] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [3ms]
+[2026-03-25 11:15:07.095] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:15:07.096] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [1ms]
+[2026-03-25 11:15:08.313] [INFO ] 127.0.0.1 - GET /bbs/admin
+[2026-03-25 11:15:08.320] [INFO ] 127.0.0.1 - Response: 200 (6.6 KB) [6ms]
+[2026-03-25 11:15:08.325] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:15:08.325] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:15:08.326] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:15:08.327] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [1ms]
+[2026-03-25 11:15:08.328] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [2ms]
+[2026-03-25 11:15:08.329] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [3ms]
+[2026-03-25 11:15:08.341] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:15:08.344] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [3ms]
+[2026-03-25 11:15:10.650] [INFO ] 127.0.0.1 - GET /bbs/admin/users
+[2026-03-25 11:15:10.653] [INFO ] 127.0.0.1 - Response: 200 (3.7 KB) [3ms]
+[2026-03-25 11:15:10.659] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:15:10.660] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:15:10.661] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:15:10.661] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [2ms]
+[2026-03-25 11:15:10.662] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [2ms]
+[2026-03-25 11:15:10.663] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [3ms]
+[2026-03-25 11:15:10.676] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:15:10.677] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [1ms]
+[2026-03-25 11:15:19.121] [INFO ] 127.0.0.1 - GET /bbs/admin/posts
+[2026-03-25 11:15:19.127] [INFO ] 127.0.0.1 - Response: 200 (2.8 KB) [6ms]
+[2026-03-25 11:15:19.132] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:15:19.133] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:15:19.133] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:15:19.134] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [1ms]
+[2026-03-25 11:15:19.134] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [2ms]
+[2026-03-25 11:15:19.135] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [3ms]
+[2026-03-25 11:15:19.145] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:15:19.147] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [1ms]
+[2026-03-25 11:15:28.232] [INFO ] 127.0.0.1 - GET /bbs/admin/posts
+[2026-03-25 11:15:28.237] [INFO ] 127.0.0.1 - Response: 200 (2.8 KB) [5ms]
+[2026-03-25 11:15:28.243] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:15:28.245] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:15:28.245] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:15:28.246] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [3ms]
+[2026-03-25 11:15:28.247] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [3ms]
+[2026-03-25 11:15:28.248] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [4ms]
+[2026-03-25 11:15:28.260] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:15:28.262] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [2ms]
+[2026-03-25 11:15:32.329] [INFO ] 127.0.0.1 - GET /bbs
+[2026-03-25 11:15:32.335] [INFO ] 127.0.0.1 - Response: 200 (4.6 KB) [6ms]
+[2026-03-25 11:15:32.341] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/css/bootstrap.min.css
+[2026-03-25 11:15:32.341] [INFO ] 127.0.0.1 - GET /bbs/static/css/style.css
+[2026-03-25 11:15:32.342] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css
+[2026-03-25 11:15:32.342] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js
+[2026-03-25 11:15:32.343] [INFO ] 127.0.0.1 - Response: 200 (227.5 KB) [1ms]
+[2026-03-25 11:15:32.343] [INFO ] 127.0.0.1 - Response: 200 (5.4 KB) [2ms]
+[2026-03-25 11:15:32.343] [INFO ] 127.0.0.1 - GET /bbs/static/js/main.js
+[2026-03-25 11:15:32.344] [INFO ] 127.0.0.1 - Response: 200 (81.9 KB) [3ms]
+[2026-03-25 11:15:32.344] [INFO ] 127.0.0.1 - Response: 200 (78.5 KB) [3ms]
+[2026-03-25 11:15:32.345] [INFO ] 127.0.0.1 - Response: 200 (5.3 KB) [1ms]
+[2026-03-25 11:15:32.356] [INFO ] 127.0.0.1 - GET /bbs/static/vendor/bootstrap-icons/font/fonts/bootstrap-icons.woff2?2ab2cbbe07fcebb53bdaa7313bb290f2
+[2026-03-25 11:15:32.357] [INFO ] 127.0.0.1 - Response: 200 (118.2 KB) [1ms]

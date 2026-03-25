@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users - {{ site_name }}</title>
+    <link href="/bbs/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/bbs/admin"><i class="bi bi-gear"></i> Admin Panel</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/bbs"><i class="bi bi-house"></i> Back to Forum</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bbs/logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-md-block bg-light sidebar py-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="/bbs/admin"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/bbs/admin/users"><i class="bi bi-people"></i> Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/bbs/admin/categories"><i class="bi bi-folder"></i> Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/bbs/admin/posts"><i class="bi bi-file-text"></i> Posts</a></li>
+                </ul>
+            </nav>
+
+            <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+                <h2><i class="bi bi-people"></i> Manage Users</h2>
+                <hr>
+
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Admin</th>
+                                    <th>Status</th>
+                                    <th>Registered</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i, u in ipairs(users or {}) do %}
+                                <tr>
+                                    <td>{{ u.id }}</td>
+                                    <td>{{ u.username }}</td>
+                                    <td>{{ u.email }}</td>
+                                    <td>
+                                        {% if u.is_admin == 1 then %}
+                                        <span class="badge bg-danger">Admin</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">User</span>
+                                        {% end %}
+                                    </td>
+                                    <td>
+                                        {% if u.is_banned == 1 then %}
+                                        <span class="badge bg-danger">Banned</span>
+                                        {% else %}
+                                        <span class="badge bg-success">Active</span>
+                                        {% end %}
+                                    </td>
+                                    <td>{{ u.created_at_fmt }}</td>
+                                    <td>
+                                        {% if u.username ~= "admin" then %}
+                                        {% if u.is_banned == 1 then %}
+                                        <a href="/bbs/admin/user/ban?id={{ u.id }}&ban=0" class="btn btn-sm btn-success" title="Unban">
+                                            <i class="bi bi-check-circle"></i>
+                                        </a>
+                                        {% else %}
+                                        <a href="/bbs/admin/user/ban?id={{ u.id }}&ban=1" class="btn btn-sm btn-warning" title="Ban">
+                                            <i class="bi bi-slash-circle"></i>
+                                        </a>
+                                        {% end %}
+                                        <a href="/bbs/admin/user/delete?id={{ u.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this user?')" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                        {% end %}
+                                    </td>
+                                </tr>
+                                {% end %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

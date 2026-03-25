@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Posts - {{ site_name }}</title>
+    <link href="/bbs/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/bbs/admin"><i class="bi bi-gear"></i> Admin Panel</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/bbs"><i class="bi bi-house"></i> Back to Forum</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bbs/logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-md-block bg-light sidebar py-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="/bbs/admin"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/bbs/admin/users"><i class="bi bi-people"></i> Users</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/bbs/admin/categories"><i class="bi bi-folder"></i> Categories</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/bbs/admin/posts"><i class="bi bi-file-text"></i> Posts</a></li>
+                </ul>
+            </nav>
+
+            <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+                <h2><i class="bi bi-file-text"></i> Manage Posts</h2>
+                <hr>
+
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Category</th>
+                                    <th>Views</th>
+                                    <th>Replies</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i, post in ipairs(posts or {}) do %}
+                                <tr>
+                                    <td>{{ post.id }}</td>
+                                    <td>
+                                        <a href="/bbs/post?id={{ post.id }}" target="_blank">{{ post.title }}</a>
+                                    </td>
+                                    <td>{{ post.username }}</td>
+                                    <td>{{ post.category_name or '-' }}</td>
+                                    <td>{{ post.view_count }}</td>
+                                    <td>{{ post.reply_count or 0 }}</td>
+                                    <td>
+                                        {% if post.is_pinned == 1 then %}
+                                        <span class="badge bg-warning text-dark">Pinned</span>
+                                        {% end %}
+                                        {% if post.is_locked == 1 then %}
+                                        <span class="badge bg-secondary">Locked</span>
+                                        {% end %}
+                                    </td>
+                                    <td>
+                                        {% if post.is_pinned == 1 then %}
+                                        <a href="/bbs/admin/post/pin?id={{ post.id }}&pin=0" class="btn btn-sm btn-outline-warning" title="Unpin">
+                                            <i class="bi bi-pin-angle-fill"></i>
+                                        </a>
+                                        {% else %}
+                                        <a href="/bbs/admin/post/pin?id={{ post.id }}&pin=1" class="btn btn-sm btn-outline-secondary" title="Pin">
+                                            <i class="bi bi-pin-angle"></i>
+                                        </a>
+                                        {% end %}
+                                        
+                                        {% if post.is_locked == 1 then %}
+                                        <a href="/bbs/admin/post/lock?id={{ post.id }}&lock=0" class="btn btn-sm btn-outline-success" title="Unlock">
+                                            <i class="bi bi-unlock"></i>
+                                        </a>
+                                        {% else %}
+                                        <a href="/bbs/admin/post/lock?id={{ post.id }}&lock=1" class="btn btn-sm btn-outline-secondary" title="Lock">
+                                            <i class="bi bi-lock"></i>
+                                        </a>
+                                        {% end %}
+                                        
+                                        <a href="/bbs/edit-post?id={{ post.id }}" class="btn btn-sm btn-outline-primary" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        
+                                        <a href="/bbs/delete-post?id={{ post.id }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this post?')" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% end %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

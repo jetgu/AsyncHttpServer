@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Categories - {{ site_name }}</title>
+    <link href="/bbs/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/bbs/admin"><i class="bi bi-gear"></i> Admin Panel</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/bbs"><i class="bi bi-house"></i> Back to Forum</a></li>
+                <li class="nav-item"><a class="nav-link" href="/bbs/logout"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-md-block bg-light sidebar py-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="/bbs/admin"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/bbs/admin/users"><i class="bi bi-people"></i> Users</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/bbs/admin/categories"><i class="bi bi-folder"></i> Categories</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/bbs/admin/posts"><i class="bi bi-file-text"></i> Posts</a></li>
+                </ul>
+            </nav>
+
+            <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+                <h2><i class="bi bi-folder"></i> Manage Categories</h2>
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="bi bi-plus-circle"></i> Add Category
+                            </div>
+                            <div class="card-body">
+                                <form method="POST" action="/bbs/admin/categories">
+                                    <input type="hidden" name="action" value="create">
+                                    <div class="mb-3">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-control" name="description" rows="2"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-plus"></i> Add
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Guest Access Bulk Actions -->
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="bi bi-eye"></i> Guest Visibility
+                            </div>
+                            <div class="card-body">
+                                <p class="small text-muted">Control which categories are visible to unregistered visitors.</p>
+                                <form method="POST" action="/bbs/admin/categories" class="d-inline">
+                                    <input type="hidden" name="action" value="show_all_guest">
+                                    <button type="submit" class="btn btn-success btn-sm mb-1">
+                                        <i class="bi bi-eye"></i> Show All to Guests
+                                    </button>
+                                </form>
+                                <form method="POST" action="/bbs/admin/categories" class="d-inline">
+                                    <input type="hidden" name="action" value="hide_all_guest">
+                                    <button type="submit" class="btn btn-warning btn-sm mb-1" onclick="return confirm('Hide all categories from guests?')">
+                                        <i class="bi bi-eye-slash"></i> Hide All from Guests
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="bi bi-list"></i> Categories
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Guest</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i, cat in ipairs(categories or {}) do %}
+                                        <tr>
+                                            <td>{{ cat.id }}</td>
+                                            <td>{{ cat.name }}</td>
+                                            <td>{{ cat.description or '' }}</td>
+                                            <td>
+                                                <form method="POST" action="/bbs/admin/categories" class="d-inline">
+                                                    <input type="hidden" name="action" value="toggle_guest">
+                                                    <input type="hidden" name="id" value="{{ cat.id }}">
+                                                    {% if cat.guest_visible == 1 then %}
+                                                    <button type="submit" class="btn btn-sm btn-success" title="Visible to guests — click to hide">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+                                                    {% else %}
+                                                    <button type="submit" class="btn btn-sm btn-secondary" title="Hidden from guests — click to show">
+                                                        <i class="bi bi-eye-slash"></i>
+                                                    </button>
+                                                    {% end %}
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ cat.id }}">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <form method="POST" action="/bbs/admin/categories" class="d-inline" onsubmit="return confirm('Delete this category?')">
+                                                    <input type="hidden" name="action" value="delete">
+                                                    <input type="hidden" name="id" value="{{ cat.id }}">
+                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        
+                                        <!-- Edit Modal -->
+                                        <div class="modal fade" id="editModal{{ cat.id }}" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form method="POST" action="/bbs/admin/categories">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Edit Category</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <input type="hidden" name="action" value="update">
+                                                            <input type="hidden" name="id" value="{{ cat.id }}">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Name</label>
+                                                                <input type="text" class="form-control" name="name" value="{{ cat.name }}" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Description</label>
+                                                                <textarea class="form-control" name="description" rows="2">{{ cat.description or '' }}</textarea>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <div class="form-check form-switch">
+                                                                    <input class="form-check-input" type="checkbox" name="guest_visible" value="1" id="gv{{ cat.id }}" {% if cat.guest_visible == 1 then %}checked{% end %}>
+                                                                    <label class="form-check-label" for="gv{{ cat.id }}">
+                                                                        <i class="bi bi-eye"></i> Visible to guests
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-text">When disabled, only logged-in users can see posts in this category.</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                            <button type="submit" class="btn btn-primary">Save</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% end %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

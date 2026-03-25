@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - {{ site_name }}</title>
+    <link href="/bbs/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bbs/static/vendor/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/bbs/admin">
+                <i class="bi bi-gear"></i> Admin Panel
+            </a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/bbs"><i class="bi bi-house"></i> Back to Forum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/bbs/logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-2 d-md-block bg-light sidebar py-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/bbs/admin">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs/admin/users">
+                            <i class="bi bi-people"></i> Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs/admin/categories">
+                            <i class="bi bi-folder"></i> Categories
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/bbs/admin/posts">
+                            <i class="bi bi-file-text"></i> Posts
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-md-10 ms-sm-auto px-md-4 py-4">
+                <h2>Dashboard</h2>
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h3>{{ stats.user_count }}</h3>
+                                        <p class="mb-0">Users</p>
+                                    </div>
+                                    <i class="bi bi-people" style="font-size: 3rem; opacity: 0.5;"></i>
+                                </div>
+                            </div>
+                            <a href="/bbs/admin/users" class="card-footer text-white text-decoration-none">
+                                View Details <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h3>{{ stats.post_count }}</h3>
+                                        <p class="mb-0">Posts</p>
+                                    </div>
+                                    <i class="bi bi-file-text" style="font-size: 3rem; opacity: 0.5;"></i>
+                                </div>
+                            </div>
+                            <a href="/bbs/admin/posts" class="card-footer text-white text-decoration-none">
+                                View Details <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h3>{{ stats.reply_count }}</h3>
+                                        <p class="mb-0">Replies</p>
+                                    </div>
+                                    <i class="bi bi-chat-dots" style="font-size: 3rem; opacity: 0.5;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-dark">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h3>{{ stats.attachment_count }}</h3>
+                                        <p class="mb-0">Attachments</p>
+                                    </div>
+                                    <i class="bi bi-paperclip" style="font-size: 3rem; opacity: 0.5;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="bi bi-info-circle"></i> System Information
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <tr>
+                                    <td>Server</td>
+                                    <td>AsyncHttpServer + Lua</td>
+                                </tr>
+                                <tr>
+                                    <td>Database</td>
+                                    <td>SQLite</td>
+                                </tr>
+                                <tr>
+                                    <td>Admin User</td>
+                                    <td>{{ user.username }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/bbs/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
